@@ -11,7 +11,7 @@
 
 _基于 Node.js 和 TypeScript 构建，提供强大的插件系统和丰富的功能模块_
 
-[📖 快速开始](#-快速开始) • [🔌 插件生态](#-插件生态) • [🛠️ 开发指南](https://github.com/TeleBoxOrg/TeleBox/blob/main/TELEBOX_DEVELOPMENT.md) • [📚 文档](#-相关链接)
+[📖 快速开始](#-快速开始) • [🔌 插件生态](#-插件生态) • [🛠️ 开发指南](https://github.com/ymxkiss/TeleBox/blob/main/TELEBOX_DEVELOPMENT.md) • [📚 文档](#-相关链接)
 
 </div>
 
@@ -334,7 +334,7 @@ abstract class Plugin {
 
 ### 📥 **安装部署**
 
-[![安装指南](https://img.shields.io/badge/📋_完整安装指南-点击查看-green?style=for-the-badge)](https://github.com/TeleBoxDev/TeleBox/blob/main/INSTALL.md)
+[![安装指南](https://img.shields.io/badge/📋_完整安装指南-点击查看-green?style=for-the-badge)](https://github.com/ymxkiss/TeleBox/blob/main/INSTALL.md)
 
 </div>
 
@@ -393,7 +393,7 @@ NODE_ENV=development npm run dev
 <tr>
 <td align="center" width="20%">
 
-[![主仓库](https://img.shields.io/badge/📦_主仓库-TeleBox-blue?style=for-the-badge&logo=github)](https://github.com/TeleBoxDev/TeleBox)
+[![主仓库](https://img.shields.io/badge/📦_主仓库-TeleBox-blue?style=for-the-badge&logo=github)](https://github.com/ymxkiss/TeleBox)
 
 </td>
 <td align="center" width="20%">
@@ -403,7 +403,7 @@ NODE_ENV=development npm run dev
 </td>
 <td align="center" width="20%">
 
-[![安装指南](https://img.shields.io/badge/📋_安装指南-INSTALL.md-orange?style=for-the-badge)](https://github.com/TeleBoxDev/TeleBox/blob/main/INSTALL.md)
+[![安装指南](https://img.shields.io/badge/📋_安装指南-INSTALL.md-orange?style=for-the-badge)](https://github.com/ymxkiss/TeleBox/blob/main/INSTALL.md)
 
 </td>
 <td align="center" width="20%">
@@ -413,7 +413,7 @@ NODE_ENV=development npm run dev
 </td>
 <td align="center" width="20%">
 
-[![问题反馈](https://img.shields.io/badge/🆘_问题反馈-Issues-red?style=for-the-badge&logo=github)](https://github.com/TeleBoxDev/TeleBox/issues)
+[![问题反馈](https://img.shields.io/badge/🆘_问题反馈-Issues-red?style=for-the-badge&logo=github)](https://github.com/ymxkiss/TeleBox/issues)
 
 </td>
 </tr>
