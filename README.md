@@ -338,6 +338,11 @@ abstract class Plugin {
 
 </div>
 
+工作目录为/root/telebox
+```
+docker run -it --rm --name telebox ghcr.io/ymxkiss/telebox:latest npm start
+```
+
 ### 💡 **基本命令**
 
 <table>
