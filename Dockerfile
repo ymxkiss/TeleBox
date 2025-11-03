@@ -38,4 +38,5 @@ RUN npm install -g pm2 && \
 
 # 启动命令：使用pm2-runtime（适合容器环境的PM2运行模式）
 # 注意：首次启动需要先执行`npm start`完成配置，再用PM2管理
+VOLUME [ "/root/telebox" ]
 CMD ["pm2-runtime", "start", "npm", "--name", "telebox", "start"]
