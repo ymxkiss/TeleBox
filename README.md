@@ -16,7 +16,18 @@ _基于 Node.js 和 TypeScript 构建，提供强大的插件系统和丰富的�
 </div>
 
 ---
+<div align="center">
 
+### 📥 **安装部署**
+
+[![安装指南](https://img.shields.io/badge/📋_完整安装指南-点击查看-green?style=for-the-badge)](https://github.com/ymxkiss/TeleBox/blob/main/INSTALL.md)
+
+</div>
+
+工作目录为/root/telebox
+```
+docker run -it --restart=always --name telebox ghcr.io/ymxkiss/telebox:latest npm start
+```
 ## ✨ 核心特性
 
 <table>
@@ -330,18 +341,7 @@ abstract class Plugin {
 
 ## 🚀 快速开始
 
-<div align="center">
 
-### 📥 **安装部署**
-
-[![安装指南](https://img.shields.io/badge/📋_完整安装指南-点击查看-green?style=for-the-badge)](https://github.com/ymxkiss/TeleBox/blob/main/INSTALL.md)
-
-</div>
-
-工作目录为/root/telebox
-```
-docker run -it --restart=always --name telebox ghcr.io/ymxkiss/telebox:latest npm start
-```
 
 ### 💡 **基本命令**
 
