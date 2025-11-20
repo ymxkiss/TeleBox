@@ -1,19 +1,24 @@
-# 基础镜像选择Ubuntu 22.04（稳定且常用）
-FROM ubuntu:22.04
+# 基础镜像更换为Debian 12（bookworm），稳定且轻量
+FROM debian:12-slim
 
 # 设置非交互模式，避免apt安装时的交互提示
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 步骤1：更新系统并安装基础工具
+# 步骤1：更新系统并安装基础工具（包含curl ca-certificates gnupg sudo）
 RUN apt update && \
-    apt install -y curl git build-essential && \
+    apt install -y curl ca-certificates gnupg sudo build-essential git && \
+    # 更新CA证书
+    update-ca-certificates && \
     # 清理apt缓存，减小镜像体积
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 步骤2：安装Node.js 20.x
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
+# 步骤2：安装Node.js 20.x（使用gnupg验证源的安全性）
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/nodesource.gpg && \
+    echo "deb https://deb.nodesource.com/node_20.x bookworm main" > /etc/apt/sources.list.d/nodesource.list && \
+    echo "deb-src https://deb.nodesource.com/node_20.x bookworm main" >> /etc/apt/sources.list.d/nodesource.list && \
+    apt update && \
+    apt install -y nodejs && \
     # 验证安装（可选，用于构建时检查）
     node --version && \
     npm --version && \
@@ -28,7 +33,7 @@ RUN git clone https://github.com/TeleBoxDev/TeleBox.git .
 # 步骤4：安装项目依赖
 RUN npm install
 
-# 步骤6：安装PM2进程管理器
+# 步骤5：安装PM2进程管理器
 RUN npm install -g pm2 && \
     # 安装日志轮转插件
     pm2 install pm2-logrotate
@@ -36,7 +41,9 @@ RUN npm install -g pm2 && \
 # 暴露可能需要的端口（根据项目实际需求，这里仅作为示例）
 # EXPOSE 3000
 
+# 挂载工作目录（方便持久化数据和配置）
 VOLUME [ "/root/telebox" ]
+
 # 启动命令：使用pm2-runtime（适合容器环境的PM2运行模式）
 # 注意：首次启动需要先执行`npm start`完成配置，再用PM2管理
 CMD ["pm2-runtime", "start", "npm", "--name", "telebox", "start"]
