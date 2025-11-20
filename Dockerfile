@@ -13,12 +13,9 @@ RUN apt update && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 步骤2：安装Node.js 20.x（使用gnupg验证源的安全性）
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/nodesource.gpg && \
-    echo "deb https://deb.nodesource.com/node_20.x bookworm main" > /etc/apt/sources.list.d/nodesource.list && \
-    echo "deb-src https://deb.nodesource.com/node_20.x bookworm main" >> /etc/apt/sources.list.d/nodesource.list && \
-    apt update && \
-    apt install -y nodejs && \
+# 步骤2：安装Node.js 20.x
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
     # 验证安装（可选，用于构建时检查）
     node --version && \
     npm --version && \
