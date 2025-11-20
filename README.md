@@ -24,7 +24,8 @@ _基于 Node.js 和 TypeScript 构建，提供强大的插件系统和丰富的�
 
 </div>
 
-工作目录为/root/telebox
+容器项目工作目录为/root/telebox
+
 本机配置文件为/root/telebox/telebox-data/config.json
 ```
 sudo mkdir -p /root/telebox/telebox-data
