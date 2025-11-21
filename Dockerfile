@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # 步骤1：更新系统并安装基础工具（包含curl ca-certificates gnupg sudo）
 RUN apt update && \
-    apt install -y curl ca-certificates gnupg sudo build-essential git && \
+    apt install -y curl ca-certificates gnupg sudo build-essential git systemd systemd-sysv && \
     # 更新CA证书
     update-ca-certificates && \
     # 清理apt缓存，减小镜像体积
