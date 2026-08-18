@@ -16,7 +16,7 @@ RUN apt update && \
 # 步骤2：安装Node.js 24.x
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
     apt-get install -y nodejs && \
-    # 验证安装（可选，用于构建时检查）
+    # 验证安装
     node --version && \
     npm --version && \
     # 清理apt缓存
