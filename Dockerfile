@@ -33,10 +33,7 @@ RUN mkdir -p /root/telebox/assets /root/telebox/data /root/telebox/plugins /root
 # 数据持久化卷
 VOLUME ["/root/telebox/assets", "/root/telebox/data", "/root/telebox/plugins", "/root/telebox/logs"]
 
-# 环境变量
-ENV NODE_ENV=production
-ENV TB_PREFIX=. 
-ENV TB_SUDO_PREFIX=# $
+
 
 # 启动命令
 CMD ["pm2-runtime", "exec", "npm", "--", "start"]
