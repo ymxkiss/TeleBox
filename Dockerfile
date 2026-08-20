@@ -35,7 +35,7 @@ VOLUME ["/root/telebox/assets", "/root/telebox/data", "/root/telebox/plugins", "
 
 # 环境变量
 ENV NODE_ENV=production
-ENV TB_PREFIX=. 。
+ENV TB_PREFIX=. 
 ENV TB_SUDO_PREFIX=# $
 
 # 启动命令
