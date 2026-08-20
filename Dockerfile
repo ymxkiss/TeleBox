@@ -58,7 +58,7 @@ RUN npm install -g pm2 && \
 RUN mkdir -p /app/data /app/assets /app/plugins /app/logs
 
 # 持久化卷
-VOLUME ["/app/data", "/app/assets", "/app/plugins", "/app/logs"]
+VOLUME ["/app","/app/data", "/app/assets", "/app/plugins", "/app/logs"]
 
 # 环境变量
 ENV NODE_ENV=production
