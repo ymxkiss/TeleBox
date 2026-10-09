@@ -1,67 +1,51 @@
-# TeleBox Docker Deployment
-# Telegram UserBot Framework
-# Base: Debian 12 (Bookworm) + Node.js 24
-# Fix: Remove ARM64 prebuilt binaries that require GLIBC 2.38+
+# syntax=docker/dockerfile:1
+# node:24-bookworm-slim is based on Debian 12 (Bookworm) slim.
+FROM node:24-bookworm-slim AS build
 
-FROM debian:12-slim
-
-# 设置非交互模式
-ENV DEBIAN_FRONTEND=noninteractive
-
-# 步骤1：安装基础工具和编译依赖
-RUN apt-get update && apt-get install -y \
-    curl \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
-    gnupg \
-    sudo \
-    build-essential \
     git \
     python3 \
-    cmake \
     make \
-    gcc \
     g++ \
-    sqlite3 \
-    libsqlite3-dev \
+    pkg-config \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
+    librsvg2-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 步骤2：安装 Node.js 24.x
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
-    apt-get install -y nodejs && \
-    node --version && \
-    npm --version
+RUN git clone --depth 1 --branch main https://github.com/TeleBoxOrg/TeleBox.git /opt/telebox
+WORKDIR /opt/telebox
+RUN npm ci --include=dev --no-audit --no-fund
 
-# 步骤3：设置工作目录
-WORKDIR /app
+FROM node:24-bookworm-slim AS runtime
 
-# 步骤4：克隆 TeleBox 项目
-RUN git clone --depth 1 https://github.com/TeleBoxOrg/TeleBox.git .
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git \
+    libcairo2 \
+    libpango-1.0-0 \
+    libjpeg62-turbo \
+    libgif7 \
+    librsvg2-2 \
+    libstdc++6 \
+    && rm -rf /var/lib/apt/lists/* \
+    && install -d -o node -g node /state
 
-# 步骤5：安装依赖（跳过预编译脚本）
-RUN npm ci --ignore-scripts --no-optional
-
-# 步骤6：删除 ARM64 预编译二进制（需要 GLIBC 2.38+，系统只有 2.36）
-RUN rm -rf node_modules/better-sqlite3/prebuilds
-
-# 步骤7：从源码重新编译所有原生模块
-RUN npm rebuild && \
-    cd node_modules/better-sqlite3 && \
-    npm run build-release || \
-    node-gyp rebuild || \
-    echo "Compilation attempted"
-
-# 步骤8：安装 PM2
-RUN npm install -g pm2 && \
-    pm2 install pm2-logrotate
+COPY --from=build --chown=node:node /opt/telebox /opt/telebox
+WORKDIR /opt/telebox
+VOLUME ["/state"]
+USER node
 
 # 创建数据目录
-RUN mkdir -p /app/data /app/assets /app/plugins /app/logs
+# RUN mkdir -p /opt/telebox/data /opt/telebox/assets /opt/telebox/plugins /opt/telebox/logs
 
 # 持久化卷
-VOLUME ["/app","/app/data", "/app/assets", "/app/plugins", "/app/logs"]
+# VOLUME ["/opt/telebox","/opt/telebox/data", "/opt/telebox/assets", "/opt/telebox/plugins", "/opt/telebox/logs"]
 
-# 环境变量
-ENV NODE_ENV=production
-
-# 启动命令
+# Keep mutable configuration and runtime data on /state without requiring a
+# separate entrypoint file. First-time Telegram login is performed in the terminal.
+ENTRYPOINT ["/bin/sh", "-c", "set -eu; app=/opt/telebox; state=/state; mkdir -p \"$state\"; for path in config.json .env plugins assets temp my_session .plugin-cache pmcaptcha_userdata; do case \"$path\" in config.json|.env) ;; *) mkdir -p \"$state/$path\" ;; esac; rm -rf \"$app/$path\"; ln -s \"$state/$path\" \"$app/$path\"; done; cd \"$app\"; exec \"$@\"", "--"]
 CMD ["npm", "start"]
