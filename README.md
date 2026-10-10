@@ -24,7 +24,7 @@ _基于 Node.js 和 TypeScript 构建，提供强大的插件系统和丰富的�
 
 </div>
 
-容器项目工作目录为/app
+容器项目工作目录为/app/telebox
 本机配置文件为/root/telebox/config.json
 ```
 sudo mkdir -p /root/telebox
@@ -32,7 +32,7 @@ sudo touch /root/telebox/config.json
 ```
 
 ```
-docker run -it --restart=always --name telebox -v /root/telebox/data/:/app/data/  -v /root/telebox/config.json:/app/config.json -v /root/telebox/assets/:/app/assets/ -v /root/telebox/plugins/:/app/plugins/ -v /root/telebox/logs/:/app/logs/ ghcr.io/ymxkiss/telebox:latest npm start
+docker run -it --restart=always --name telebox -v /root/telebox/config.json:/app/config.json ghcr.io/ymxkiss/telebox:latest npm start
 ```
 ## ✨ 核心特性
 
