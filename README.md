@@ -32,7 +32,7 @@ sudo touch /root/telebox/config.json
 ```
 
 ```
-docker run -it --restart=always --name telebox -v /root/telebox/config.json:/app/config.json ghcr.io/ymxkiss/telebox:latest npm start
+docker run -it --restart=always --name telebox -v /root/telebox/config.json:/app/telebox/config.json ghcr.io/ymxkiss/telebox:latest npm start
 ```
 ## ✨ 核心特性
 
